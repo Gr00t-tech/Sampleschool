@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sample School - Login</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <style>
+       body {
+            background-image: url("{{ url_for('static', filename='123.jpg') }}");            
+            background-size: cover;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h1, h2 {
+            color: #477753;
+            text-shadow: 1px 1px 3px rgba(143, 137, 137, 0.4);
+            font-weight: 700;
+        }
+
+        /* Login card styling */
+        .login-card {
+            background: rgba(127, 130, 141, 0.95);
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(202, 202, 202, 0.25);
+            padding: 2rem;
+            width: 100%;
+            max-width: 400px;
+            animation: fadeInUp 0.8s ease both;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            box-shadow: inset 0 1px 3px rgba(160, 158, 158, 0.1);
+        }
+
+        .card {
+            background-image: url("{{ url_for('static', filename='123.jpg') }}");
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, #3354ad, #0a6e6e);
+            border: none;
+            border-radius: 8px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(179, 175, 175, 0.2);
+        }
+
+        .alert {
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+  </style>
+</head>
+<body>
+  <div class="login-card text-center">
+    <h1 class="mb-3">School-App</h1>
+    <h2 class="mb-4">Admin Login</h2>
+    <strong><p>Please log in to continue</p></strong>
+
+    <!-- Login Form -->
+   <!-- Login Form -->
+<form method="POST" action="{{ url_for('login') }}">
+  <div class="mb-3 text-start">
+    <label for="username" class="form-label fw-bold">Username</label>
+    <input type="text" class="form-control" id="username" name="username" required>
+  </div>
+
+  <div class="mb-3 text-start">
+    <label for="password" class="form-label fw-bold">Password</label>
+    <input type="password" class="form-control" id="password" name="password" required>
+  </div>
+
+  <!-- Show error if login fails -->
+  {% if error %}
+  <div class="alert alert-danger">{{ error }}</div>
+  {% endif %}
+
+  <!-- Submit button -->
+  <button type="submit" class="btn btn-primary w-100">Login</button>
+</form>
+
+<!-- Reset password link styled as button -->
+<a href="{{ url_for('resetpwd') }}" class="btn btn-secondary w-100 mt-2">Reset Password</a>
+
+    
+  </div>
+</body>
+</html>
