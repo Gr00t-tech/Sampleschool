@@ -190,19 +190,26 @@ def teachers_page():
 
     if request.method == "POST":
         teacher_name = request.form.get("teacher", "").strip()
-        subject = request.form.get("subject", "").strip()
 
-        if not teacher_name or not subject:
-            flash("All fields are required!", "warning")
+        if not teacher_name:
+            flash("Teacher is required!", "warning")
         else:
-            teacher = Teacher(teacher=teacher_name, subject=subject)
-            db.session.add(teacher)
-            db.session.commit()
-            flash("Teacher added successfully!", "success")
+            # Look up subject for this teacher
+            teacher_obj = Teacher.query.filter_by(teacher=teacher_name).first()
+            if teacher_obj:
+                subject = teacher_obj.subject
+                new_teacher = Teacher(teacher=teacher_name, subject=subject)
+                db.session.add(new_teacher)
+                db.session.commit()
+                flash("Teacher added successfully!", "success")
+            else:
+                flash("Teacher not found in database!", "danger")
+
         return redirect(url_for("teachers_page"))
 
     teachers = Teacher.query.all()
     return render_template("teachers.html", teachers=teachers, username=session.get("username"))
+
 
 @app.route("/teachers/edit/<int:id>", methods=["GET", "POST"])
 def edit_teacher(id):
