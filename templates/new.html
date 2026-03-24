@@ -77,7 +77,7 @@
       <a class="navbar-brand" href="{{ url_for('new_page') }}">School-App</a>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link" href="/">Students</a></li
+          <li class="nav-item"><a class="nav-link" href="/">Students</a></li>
           <li class="nav-item"><a class="nav-link" href="/">Courses</a></li>
           <li class="nav-item"><a class="nav-link" href="/">Teachers</a></li>
           <li class="nav-item"><a class="nav-link" href="/">Attendance</a></li>
@@ -91,11 +91,26 @@
   <div class="welcome">Welcome, {{ username }}!</div>
 
   <!-- ✅ Card-based navigation -->
-  <div class="card-container">
-    <p><a href="{{ url_for('home') }}" class="card">Students</a>
-    <a href="{{ url_for('courses_page') }}" class="card">Courses</a>
-    <a href="{{ url_for('teachers_page') }}" class="card">Teachers</a>
-    <a href="{{ url_for('attendance') }}" class="card">Attendance</a>
-  </div>
+ <div class="card-container">
+  <a href="{{ url_for('home') }}" class="card">
+    <div class="card-title">Students</div>
+    <div class="card-text">Manage student records, view profiles, and update details.</div>
+  </a>
+<div class="card-container">
+  <a href="{{ url_for('courses_page') }}" class="card">
+    <div class="card-title">Courses</div>
+    <div class="card-text">Browse available courses, schedules, and assignments.</div>
+  </a>
+</div>
+  <a href="{{ url_for('teachers_page') }}" class="card">
+    <div class="card-title">Teachers</div>
+    <div class="card-text">View teacher profiles and manage their information.</div>
+  </a>
+  <a href="{{ url_for('attendance') }}" class="card">
+    <div class="card-title">Attendance</div>
+    <div class="card-text">Track and manage student attendance records.</div>
+  </a>
+</div>
+
 </body>
 </html>
