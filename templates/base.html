@@ -6,59 +6,90 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
       body {
-      background-image: url('static/23.jpg')!important;
-            background-attachment: fixed;
-            background-size: cover;
-            min-height: 100vh;
-            margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+      /* Gradient background */
+      background: linear-gradient(135deg, #e0f7fa, #f4f6f9);
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-        h1, h2 {
-            color: #477753;
-            text-shadow: 1px 1px 3px rgba(143, 137, 137, 0.4);
-            font-weight: 700;
-        }
+    .login-card {
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 420px;
+      animation: fadeInUp 0.8s ease both;
+    }
 
-        /* Login card styling */
-        .login-card {
-            background: rgba(127, 130, 141, 0.95);
-            border-radius: 12px;
-            box-shadow: 0 6px 20px rgba(202, 202, 202, 0.25);
-            padding: 2rem;
-            width: 100%;
-            max-width: 400px;
-            animation: fadeInUp 0.8s ease both;
-        }
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #2c3e50;
+      margin-bottom: 0.5rem;
+    }
 
-        .form-control {
-            border-radius: 8px;
-            box-shadow: inset 0 1px 3px rgba(160, 158, 158, 0.1);
-        }
+    h2 {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: #16a085;
+      margin-bottom: 1.5rem;
+    }
 
-        .btn-primary {
-            background: linear-gradient(90deg, #3354ad, #0a6e6e);
-            border: none;
-            border-radius: 8px;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(179, 175, 175, 0.2);
-        }
+    p {
+      color: #555;
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+    }
 
-        .alert {
-            border-radius: 8px;
-            margin-bottom: 1rem;
-        }
+    .form-label {
+      font-weight: 600;
+      color: #2c3e50;
+    }
 
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+    .form-control {
+      border-radius: 10px;
+      padding: 0.75rem;
+      border: 1px solid #ddd;
+      transition: border-color 0.2s ease;
+    }
+    .form-control:focus {
+      border-color: #16a085;
+      box-shadow: 0 0 0 0.2rem rgba(22,160,133,0.25);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #16a085, #2980b9);
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      padding: 0.75rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+    }
+
+    .btn-secondary {
+      border-radius: 10px;
+      font-weight: 500;
+      padding: 0.65rem;
+    }
+
+    .alert {
+      border-radius: 10px;
+      font-size: 0.9rem;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
     </style>
 </head>
 <body>
