@@ -5,50 +5,28 @@
   <title>School App - Courses</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
   <style>
-   body {
+    body {
       /* Gradient background */
       background: linear-gradient(135deg, #e0f7fa, #f4f6f9);
       min-height: 100vh;
       margin: 0;
       font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      color: #2c3e50;
     }
 
-    .login-card {
-      background: #ffffff;
-      border-radius: 16px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-      padding: 2.5rem;
-      width: 100%;
-      max-width: 420px;
-      animation: fadeInUp 0.8s ease both;
+    .navbar {
+      background: rgba(255, 255, 255, 0.95) !important;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border-radius: 0 0 12px 12px;
     }
+    .navbar-brand { font-weight: 700; color: #16a085 !important; }
+    .nav-link { font-weight: 500; transition: color 0.3s ease; }
+    .nav-link:hover { color: #2980b9 !important; }
 
-    h1 {
-      font-size: 1.8rem;
+    h1, h2, h3 {
       font-weight: 700;
       color: #2c3e50;
-      margin-bottom: 0.5rem;
-    }
-
-    h2 {
-      font-size: 1.2rem;
-      font-weight: 500;
-      color: #16a085;
-      margin-bottom: 1.5rem;
-    }
-
-    p {
-      color: #555;
-      font-size: 0.95rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .form-label {
-      font-weight: 600;
-      color: #2c3e50;
+      margin-bottom: 1rem;
     }
 
     .form-control {
@@ -75,20 +53,44 @@
       box-shadow: 0 6px 14px rgba(0,0,0,0.15);
     }
 
-    .btn-secondary {
-      border-radius: 10px;
+    .btn-warning, .btn-danger {
+      border-radius: 8px;
       font-weight: 500;
-      padding: 0.65rem;
     }
 
-    .alert {
-      border-radius: 10px;
-      font-size: 0.9rem;
+    .table {
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+    .table thead {
+      background: linear-gradient(135deg, #16a085, #2980b9);
+      color: #fff;
     }
 
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
+    /* Chat button styling */
+    .chat-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, #16a085, #2980b9);
+      color: #fff;
+      font-size: 1.5rem;
+      text-decoration: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      z-index: 9999;
+    }
+    .chat-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.25);
     }
   </style>
 </head>
@@ -163,6 +165,9 @@
       </tbody>
     </table>
   </div>
+
+  <!-- Chat Button -->
+  <a href="{{ url_for('chat') }}" class="chat-button">💬</a>
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
