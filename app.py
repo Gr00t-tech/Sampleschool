@@ -1,5 +1,4 @@
 from flask import Flask, request, redirect, render_template, url_for, session, flash
-
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -30,6 +29,7 @@ class Course(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     course = db.Column(db.String(100), nullable=False)
     teacher = db.Column(db.String(100), nullable=False)
+    subject = db.Column(db.String(100), nullable=False)
     time = db.Column(db.String(50), nullable=False)
 
 class Attendance(db.Model):
@@ -66,6 +66,7 @@ def logout():
     session.clear()
     flash("You have been logged out.", "info")
     return redirect(url_for("login_page"))
+
 # -------------------------------
 # Reset Password Page
 # -------------------------------
@@ -76,7 +77,6 @@ def resetpwd():
         if not email:
             flash("Email is required!", "warning")
         else:
-            # Later you can integrate Flask-Mail or token-based reset here
             flash(f"Password reset instructions sent to {email}", "info")
             return redirect(url_for("login_page"))
     return render_template("resetpwd.html")
@@ -145,20 +145,26 @@ def courses_page():
 
     if request.method == "POST":
         course_name = request.form.get("course", "").strip()
-        teacher = request.form.get("teacher", "").strip()
+        teacher_name = request.form.get("teacher", "").strip()
         time = request.form.get("time", "").strip()
 
-        if not course_name or not teacher or not time:
+        if not course_name or not teacher_name or not time:
             flash("All fields are required!", "warning")
         else:
-            course = Course(course=course_name, teacher=teacher, time=time)
-            db.session.add(course)
-            db.session.commit()
-            flash("Course added successfully!", "success")
+            teacher_obj = Teacher.query.filter_by(teacher=teacher_name).first()
+            if teacher_obj:
+                subject = teacher_obj.subject
+                course = Course(course=course_name, teacher=teacher_name, subject=subject, time=time)
+                db.session.add(course)
+                db.session.commit()
+                flash("Course added successfully!", "success")
+            else:
+                flash("Teacher not found in database!", "danger")
         return redirect(url_for("courses_page"))
 
     courses = Course.query.all()
-    return render_template("courses.html", courses=courses, username=session.get("username"))
+    teachers = Teacher.query.all()
+    return render_template("courses.html", courses=courses, teachers=teachers, username=session.get("username"))
 
 @app.route("/courses/edit/<int:id>", methods=["GET", "POST"])
 def edit_course(id):
@@ -166,11 +172,14 @@ def edit_course(id):
     if request.method == "POST":
         course.course = request.form.get("course", "").strip()
         course.teacher = request.form.get("teacher", "").strip()
+        teacher_obj = Teacher.query.filter_by(teacher=course.teacher).first()
+        course.subject = teacher_obj.subject if teacher_obj else ""
         course.time = request.form.get("time", "").strip()
         db.session.commit()
         flash("Course updated successfully!", "success")
         return redirect(url_for("courses_page"))
-    return render_template("edit_course.html", course=course)
+    teachers = Teacher.query.all()
+    return render_template("edit_course.html", course=course, teachers=teachers)
 
 @app.route("/courses/delete/<int:id>", methods=["POST"])
 def delete_course(id):
@@ -194,7 +203,6 @@ def teachers_page():
         if not teacher_name:
             flash("Teacher is required!", "warning")
         else:
-            # Look up subject for this teacher
             teacher_obj = Teacher.query.filter_by(teacher=teacher_name).first()
             if teacher_obj:
                 subject = teacher_obj.subject
@@ -209,7 +217,6 @@ def teachers_page():
 
     teachers = Teacher.query.all()
     return render_template("teachers.html", teachers=teachers, username=session.get("username"))
-
 
 @app.route("/teachers/edit/<int:id>", methods=["GET", "POST"])
 def edit_teacher(id):
@@ -245,36 +252,8 @@ def attendance():
         if not student or not status:
             flash("All fields are required!", "warning")
         else:
-            record = Attendance(student=student, status=status)
-            db.session.add(record)
+            attendance_record = Attendance(student=student, status=status)
+            db.session.add(attendance_record)
             db.session.commit()
             flash("Attendance recorded successfully!", "success")
-        return redirect(url_for("attendance"))
-
-    attendance_records = Attendance.query.all()
-    return render_template("attendance.html", students=Student.query.all(), attendance=attendance_records, username=session.get("username"))
-
-@app.route("/attendance/edit/<int:id>", methods=["GET", "POST"])
-def edit_attendance(id):
-    record = Attendance.query.get_or_404(id)
-    if request.method == "POST":
-        record.student = request.form.get("student", "").strip()
-        record.status = request.form.get("status", "").strip()
-        db.session.commit()
-        flash("Attendance updated successfully!", "success")
-        return redirect(url_for("attendance"))
-    return render_template("edit_attendance.html", record=record)
-
-@app.route("/attendance/delete/<int:id>", methods=["POST"])
-def delete_attendance(id):
-    record = Attendance.query.get_or_404(id)
-    db.session.delete(record)
-    db.session.commit()
-    flash("Attendance record deleted successfully!", "info")
-    return redirect(url_for("attendance"))
-
-# ✅ Entry point
-if __name__ == "__main__":
-    with app.app_context():
-        db.create_all()  # Ensure tables are created
-    app.run(debug=True, port=5005)
+        return redirect(url_for("attendance"))  
